@@ -1,10 +1,15 @@
 const apiResponseHelper = require("../../../../helper/apiResponse");
+const inputValidationHelper = require("../../../../helper/inputValidation");
 const userModel = require('../../../../model/user');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const loginPost = async (request, response) => {
     try {
         // Get user input
+        var checkRequired = inputValidationHelper.checkRequiredForm(request,'login_form');
+        if (!checkRequired.status){
+            throw new Error (checkRequired.msg);
+        }
         const {email, password} = request.body;
         let result =  await userModel.findByField('email', email);
         if (result[0]){
@@ -19,7 +24,7 @@ const loginPost = async (request, response) => {
                 result[0].token = token;
                 apiResponseHelper.jsonRes(response, 200, '',{user: result[0] });
             }else{
-                throw new Error ('passsword');
+                throw new Error ('password does not match.');
             }
         }else{
             throw new Error ('user not found.');
@@ -30,6 +35,10 @@ const loginPost = async (request, response) => {
 }
 const registerPost = async (request, response) => {
     try {
+        var checkRequired = inputValidationHelper.checkRequiredForm(request,'register_form');
+        if (!checkRequired.status){
+            throw new Error (checkRequired.msg);
+        }
         // Get user input
         const {name,email, password} = request.body;
         let result =  await userModel.findByField('email', email);
