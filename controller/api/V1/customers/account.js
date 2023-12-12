@@ -17,7 +17,7 @@ const loginPost = async (request, response) => {
                     }
                 );
                 result[0].token = token;
-                apiResponseHelper.jsonRes(response, 200, {user: result[0] });
+                apiResponseHelper.jsonRes(response, 200, '',{user: result[0] });
             }else{
                 throw new Error ('passsword');
             }
@@ -25,7 +25,7 @@ const loginPost = async (request, response) => {
             throw new Error ('user not found.');
         }
     } catch (err) {
-        apiResponseHelper.jsonRes(response, 500, {msg: err.message});
+        apiResponseHelper.jsonRes(response, 500, err.message , {});
     }
 }
 const registerPost = async (request, response) => {
@@ -34,7 +34,7 @@ const registerPost = async (request, response) => {
         const {name,email, password} = request.body;
         let result =  await userModel.findByField('email', email);
         if (result[0]){
-            apiResponseHelper.jsonRes(response, 409, {msg: 'user already exists.' });
+            apiResponseHelper.jsonRes(response, 409, 'user already exists.' , {});
         }else{
             var encryptedPassword = await bcrypt.hash(password, 10);
             var newUserData = {name:name,email:email,password:encryptedPassword };
@@ -48,20 +48,20 @@ const registerPost = async (request, response) => {
                     }
                 );
                 newUser[0].token = token;
-                apiResponseHelper.jsonRes(response, 200, {user: newUser});
+                apiResponseHelper.jsonRes(response, 200, '',{user: newUser[0]});
             }else{
                 throw new Error('try again.');
             }
         }
     } catch (err) {
-        apiResponseHelper.jsonRes(response, 500, {msg: err.message});
+        apiResponseHelper.jsonRes(response, 500, err.message,{});
     }
 }
 const dashboardPost = async (request, response) => {
     try {
-        apiResponseHelper.jsonRes(response, 200, {user: request.user });
+        apiResponseHelper.jsonRes(response, 200, '',{user: request.user });
     } catch (err) {
-        apiResponseHelper.jsonRes(response, 500, {msg: err.message});
+        apiResponseHelper.jsonRes(response, 500,  err.message,{});
     }
 }
 module.exports = {loginPost,registerPost,dashboardPost}
