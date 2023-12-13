@@ -4,10 +4,10 @@ exports.connect = () => {
     // Connecting to the database
     // Create a MySQL connection
     const connection = mysql.createConnection ({
-        host: '172.21.8.213',
-        user: 'root',
-        password: 'root1',
-        database: 'prv2' // Use the name of the database you created
+        host: 'IP',
+        user: 'uname',
+        password: 'pass',
+        database: 'db_name'
     });
     // Connect to the MySQL database
     connection.connect((err) => {
