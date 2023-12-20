@@ -1,5 +1,6 @@
 const express = require('express');
 const mysql = require('mysql');
+const customerAccountTables = require('./tables/customer/account');
 exports.connect = () => {
     // Connecting to the database
     // Create a MySQL connection
@@ -17,5 +18,7 @@ exports.connect = () => {
         }
         console.log('Connected to the database as ID ' + connection.threadId);
     });
+    //create table when application run
+    customerAccountTables.customerAccountsTables(connection);
     return connection;
 };
