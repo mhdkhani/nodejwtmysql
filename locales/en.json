@@ -1,0 +1,11 @@
+{
+	"You have %s message": {
+		"one": "You have %s message",
+		"other": "You have %s message"
+	},
+	"password does not match.": "password does not match.",
+	"user not found.": "user not found.",
+	"user already exists.": "user already exists.",
+	"try again.": "try again.",
+	"%s is required.": "%s is required."
+}

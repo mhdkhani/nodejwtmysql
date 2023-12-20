@@ -1,5 +1,6 @@
 const loginRequired = ['email','password'];
 const registerRequired = ['name','email','password'];
+const i18n = require('../i18n.config');
 exports.checkRequiredForm = (request,formName) => {
     var response = {status:true,msg: ''}
     var fields = [];
@@ -14,7 +15,7 @@ exports.checkRequiredForm = (request,formName) => {
     var errorMsg = [];
     for (var i = 0 ; i < fields.length ; i++){
         if (!request.body[fields[i]] || request.body[fields[i]] === '' || request.body[fields[i]] === ' '){
-            errorMsg.push(fields[i] + ' is required.');
+            errorMsg.push(i18n.__('%s is required.', fields[i]));
         }
     }
     if (errorMsg.length){

@@ -1,0 +1,13 @@
+{
+	"You have %s message": {
+		"one": "شما %s تعداد پیغام دارید",
+		"other": "شما %s تعداد پیغام دارید"
+	},
+	"password does not match.": "کلمه عبور اشتباه می باشد.",
+	"user not found.": "ایمیل وارد شده اشتباه می باشد.",
+	"user already exists.": "مشتری از قبل ایجاد شده است.",
+	"try again.": "مجددا تلاش کنید.",
+	"%s is required.": "%s اجباری می باشد.",
+	"Invalid Token": "توکن وارد شده معتبر نمی باشد.",
+	"A token is required for authentication": "توکن اجباری می باشد."
+}

@@ -3,6 +3,7 @@ const inputValidationHelper = require("../../../../helper/inputValidation");
 const userModel = require('../../../../model/user');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const i18n = require('../../../../i18n.config');
 const loginPost = async (request, response) => {
     try {
         // Get user input
@@ -24,10 +25,10 @@ const loginPost = async (request, response) => {
                 result[0].token = token;
                 apiResponseHelper.jsonRes(response, 200, '',{user: result[0] });
             }else{
-                throw new Error ('password does not match.');
+                throw new Error (i18n.__('password does not match.'));
             }
         }else{
-            throw new Error ('user not found.');
+            throw new Error (i18n.__('user not found.'));
         }
     } catch (err) {
         apiResponseHelper.jsonRes(response, 500, err.message , {});
@@ -43,7 +44,7 @@ const registerPost = async (request, response) => {
         const {name,email, password} = request.body;
         let result =  await userModel.findByField('email', email);
         if (result[0]){
-            apiResponseHelper.jsonRes(response, 409, 'user already exists.' , {});
+            apiResponseHelper.jsonRes(response, 409, i18n.__('user already exists.') , {});
         }else{
             var encryptedPassword = await bcrypt.hash(password, 10);
             var newUserData = {name:name,email:email,password:encryptedPassword };
@@ -59,7 +60,7 @@ const registerPost = async (request, response) => {
                 newUser[0].token = token;
                 apiResponseHelper.jsonRes(response, 200, '',{user: newUser[0]});
             }else{
-                throw new Error('try again.');
+                throw new Error(i18n.__('try again.'));
             }
         }
     } catch (err) {
