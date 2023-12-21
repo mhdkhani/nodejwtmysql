@@ -3,8 +3,10 @@ const i18n = require('./i18n.config');
 const express = require('express');
 const app = express();
 const path = require("path");
+//var cookieParser = require('cookie-parser')
 const port = 3000
 app.use(express.json());
+//app.use(cookieParser);
 const expressLayouts = require('express-ejs-layouts')
 app.use("/css", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
 app.use("/js", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
