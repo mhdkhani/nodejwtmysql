@@ -1,0 +1,39 @@
+<div class="container">
+    <h1 class="mt-5 mb-5 text-center text-primary"><b>Login System in Node.js Express</b></h1>
+    <div class="row mt-5">
+        <div class="col-md-3">&nbsp;</div>
+        <div class="col-md-6">
+            <% if(userIsLoggedIn) { %>
+
+                <h1>Hi User, Welcome</h1>
+
+                <a href="/logout" class="btn btn-primary">Logout</a>
+
+            <% } else { %>
+
+                <div class="card">
+                    <div class="card-header">Login</div>
+                    <div class="card-body">
+                        <form method="post" action="/login">
+                            <div class="mb-3">
+                                <label>Email Address</label>
+                                <input type="email" name="user_email_address" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label>Password</label>
+                                <input type="password" name="user_password" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <input type="submit" class="btn btn-primary" value="Login" />
+                                <button type="button" class="btn btn-success">
+                                    <a href="<%= homeUrl %>">Home</a>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            <% } %>
+        </div>
+    </div>
+</div>
