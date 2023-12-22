@@ -11,6 +11,7 @@ const expressLayouts = require('express-ejs-layouts')
 app.use("/css", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
 app.use("/js", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
 app.use("/js", express.static(path.join(__dirname, "node_modules/jquery/dist")));
+app.use("/js", express.static(path.join(__dirname, "public/javascripts")));
 // view engine setup
 app.use(expressLayouts)
 app.set('views', path.join(__dirname, 'views'));

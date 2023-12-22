@@ -16,6 +16,12 @@ router.get('/login/', function(req, res, next) {
         loginPostUrl:helper.getUrl(req,'/customers/account/login'),
         userIsLoggedIn:false,
         bootstrapCssUrl:helper.getUrl(req,'/css/bootstrap.min.css'),
+        scripts:
+            [
+                helper.getUrl(req,'/js/jquery.min.js'),
+                helper.getUrl(req,'/js/main.js'),
+                helper.getUrl(req,'/js/customer/account.js')
+            ],
         layout: './layout/one-column'
     });
 });
@@ -33,6 +39,12 @@ router.get('/register/', function(req, res, next) {
         homeUrl:helper.getUrl(req,'/'),
         registerPostUrl:helper.getUrl(req,'/customers/account/register'),
         bootstrapCssUrl:helper.getUrl(req,'/css/bootstrap.min.css'),
+        scripts:
+            [
+                helper.getUrl(req,'/js/jquery.min.js'),
+                helper.getUrl(req,'/js/main.js'),
+                helper.getUrl(req,'/js/customer/account.js')
+            ],
         layout: './layout/one-column'
     });
 });
