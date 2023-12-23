@@ -16,5 +16,26 @@ jQuery(function ($) {
             });
             return o;
         };
+        /* call api */
+        $.fn.callApi = function() {
+            var form = $(this);
+            var actionUrl = form.attr('action');
+            $.ajax({
+                "url": actionUrl,
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify(form.serializeObject()),
+                success: function(data)
+                {
+                    alert(data);
+                },
+                error:function (response){
+
+                }
+            });
+        };
     })
 });
