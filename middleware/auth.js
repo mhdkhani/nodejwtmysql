@@ -3,7 +3,7 @@ const apiResponseHelper = require("../helper/apiResponse");
 const i18n = require('../i18n.config');
 const config = process.env;
 const verifyToken = (req, res, next) => {
-    const token = req.body.token || req.query.token || req.headers["x-access-token"];
+    const token = req.body.token || req.query.token || req.headers["x-access-token"] || req.cookies.customer_token;
 
     if (!token) {
         return apiResponseHelper.jsonRes(res, 403, i18n.__("A token is required for authentication"),{});
