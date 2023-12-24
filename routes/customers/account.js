@@ -2,6 +2,7 @@ var express = require('express');
 const helper = require("../../helper/urlHelper");
 const auth = require("../../middleware/auth");
 const {registerPost, loginPost} = require("../../controller/api/V1/customers/account");
+const {logout} = require("../../controller/customer/account");
 var router = express.Router();
 
 /* GET users listing. */
@@ -60,8 +61,10 @@ router.get('/dashboard/', auth , function(req, res, next) {
     res.render('users/dashboard', {
         title: 'Express' ,
         userIsLoggedIn:false,
+        userEmail:req.user.email,
         homeUrl:helper.getUrl(req,'/'),
         registerPostUrl:helper.getUrl(req,'/customers/account/register'),
+        logoutUrl:helper.getUrl(req,'/customers/account/logout'),
         bootstrapCssUrl:helper.getUrl(req,'/css/bootstrap.min.css'),
         scripts:
             [
@@ -72,5 +75,9 @@ router.get('/dashboard/', auth , function(req, res, next) {
         layout: './layout/one-column'
     });
 });
+
+/* GET user logout. */
+router.get('/logout/', logout );
+
 
 module.exports = router;

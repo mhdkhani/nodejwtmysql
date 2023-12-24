@@ -7,4 +7,8 @@ module.exports =  class Helper {
     getUrl(req,url){
         return req.protocol + '://' +req.get('host')+url;
     }
+
+    redirect(response,request,path,code){
+        response.status(code).redirect(this.getUrl(request,path));
+    }
 }
