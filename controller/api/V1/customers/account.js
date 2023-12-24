@@ -25,6 +25,9 @@ module.exports = new class AccountController extends ApiController{
                         }
                     );
                     result[0].token = token;
+                    //set cookie
+                    let minute = 60 * 1000;
+                    response.cookie('customer_token', token, { maxAge: minute });
                     apiResponseHelper.jsonRes(response, 200, '',{user: result[0] });
                 }else{
                     throw new Error (i18n.__('password does not match.'));
