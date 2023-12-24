@@ -1,17 +1,15 @@
 var express = require('express');
 const helper = require("../../helper/urlHelper");
 const auth = require("../../middleware/auth");
+const authIsLoggedIn = require("../../middleware/authIsLoggedIn");
+const authIsNotLoggedIn = require("../../middleware/authIsNotLoggedIn");
 const {registerPost, loginPost} = require("../../controller/api/V1/customers/account");
 const {logout} = require("../../controller/customer/account");
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-    res.send('respond with a resource');
-});
 
 /* GET user login form. */
-router.get('/login/', function(req, res, next) {
+router.get('/login/', authIsLoggedIn,function(req, res, next) {
     res.render('users/login_form', {
         title: 'Express' ,
         homeUrl:helper.getUrl(req,'/'),
@@ -32,7 +30,7 @@ router.get('/login/', function(req, res, next) {
 router.post("/login", loginPost);
 
 /* GET user register form. */
-router.get('/register/', function(req, res, next) {
+router.get('/register/', authIsLoggedIn,function(req, res, next) {
     var homeUrl = helper.getUrl(req,'/');
     var bootstrapCssUrl = helper.getUrl(req,'/css/bootstrap.min.css');
     res.render('users/register_form', {
@@ -55,7 +53,7 @@ router.get('/register/', function(req, res, next) {
 router.post("/register", registerPost);
 
 /* GET user dashboard. */
-router.get('/dashboard/', auth , function(req, res, next) {
+router.get('/dashboard/', authIsNotLoggedIn , function(req, res, next) {
     var homeUrl = helper.getUrl(req,'/');
     var bootstrapCssUrl = helper.getUrl(req,'/css/bootstrap.min.css');
     res.render('users/dashboard', {

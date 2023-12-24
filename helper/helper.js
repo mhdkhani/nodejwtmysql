@@ -9,6 +9,6 @@ module.exports =  class Helper {
     }
 
     redirect(response,request,path,code){
-        response.status(code).redirect(this.getUrl(request,path));
+        response.status(code).redirect(path);
     }
 }
