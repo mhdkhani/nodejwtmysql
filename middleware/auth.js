@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const apiResponseHelper = require("../helper/apiResponse");
 const i18n = require('../i18n.config');
 const config = process.env;
+//if login, has access
 const verifyToken = (req, res, next) => {
     const token = req.body.token || req.query.token || req.headers["x-access-token"] || req.cookies.customer_token;
 

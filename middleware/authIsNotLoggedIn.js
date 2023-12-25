@@ -3,6 +3,7 @@ const apiResponseHelper = require("../helper/apiResponse");
 const helper = require("../helper/urlHelper");
 const i18n = require('../i18n.config');
 const config = process.env;
+//if not login, redirect to login form
 const verifyTokenCheck = (req, res, next) => {
     const token = req.body.token || req.query.token || req.headers["x-access-token"] || req.cookies.customer_token;
     try {
