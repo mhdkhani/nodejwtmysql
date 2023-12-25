@@ -3,7 +3,7 @@ const helper = require("../../helper/urlHelper");
 const auth = require("../../middleware/auth");
 const authIsLoggedIn = require("../../middleware/authIsLoggedIn");
 const authIsNotLoggedIn = require("../../middleware/authIsNotLoggedIn");
-const {registerPost, loginPost} = require("../../controller/api/V1/customers/account");
+const {registerPost, loginPost,editPost} = require("../../controller/api/V1/customers/account");
 const {logout} = require("../../controller/customer/account");
 var router = express.Router();
 
@@ -59,9 +59,9 @@ router.get('/dashboard/', authIsNotLoggedIn , function(req, res, next) {
     res.render('users/dashboard', {
         title: 'Express' ,
         userIsLoggedIn:false,
-        userEmail:req.user.email,
+        userData:req.user,
         homeUrl:helper.getUrl(req,'/'),
-        registerPostUrl:helper.getUrl(req,'/customers/account/register'),
+        editPostUrl:helper.getUrl(req,'/customers/account/edit'),
         logoutUrl:helper.getUrl(req,'/customers/account/logout'),
         bootstrapCssUrl:helper.getUrl(req,'/css/bootstrap.min.css'),
         scripts:
@@ -77,5 +77,7 @@ router.get('/dashboard/', authIsNotLoggedIn , function(req, res, next) {
 /* GET user logout. */
 router.get('/logout/', logout );
 
+/* POST user edit form. */
+router.post("/edit", authIsNotLoggedIn ,editPost);
 
 module.exports = router;

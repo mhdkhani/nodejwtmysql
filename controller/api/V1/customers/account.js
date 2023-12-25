@@ -18,7 +18,7 @@ module.exports = new class AccountController extends ApiController{
             if (result[0]){
                 if ((await bcrypt.compare(password, result[0].password))){
                     const token = jwt.sign(
-                        { user_id: result[0].id, email },
+                        { user_id: result[0].id, email: result[0].email,name: result[0].name},
                         process.env.TOKEN_KEY,
                         {
                             expiresIn: "2h",
@@ -56,7 +56,7 @@ module.exports = new class AccountController extends ApiController{
                 var newUser = await userModel.create(newUserData);
                 if (newUser[0]){
                     const token = jwt.sign(
-                        { user_id: newUser[0].id, email },
+                        { user_id: newUser[0].id, email: newUser[0].email,name: newUser[0].name},
                         process.env.TOKEN_KEY,
                         {
                             expiresIn: "2h",
@@ -77,6 +77,46 @@ module.exports = new class AccountController extends ApiController{
             apiResponseHelper.jsonRes(response, 200, '',{user: request.user });
         } catch (err) {
             apiResponseHelper.jsonRes(response, 500,  err.message,{});
+        }
+    }
+    async editPost(request, response){
+        try {
+            var checkRequired = inputValidationHelper.checkRequiredForm(request,'edit_form');
+            if (!checkRequired.status){
+                throw new Error (checkRequired.msg);
+            }
+            // Get user input
+            const {name,email} = request.body;
+            let user =  await userModel.find( request.user.user_id);
+            if (user[0]){
+                let checkUser =  await userModel.findByField('email', email);
+                if (checkUser[0] && checkUser[0].id != user[0].id){
+                    apiResponseHelper.jsonRes(response, 409, i18n.__('user already exists.') , {});
+                }else{
+                    var newEditData = {name:name,email:email };
+                    var editUser = await userModel.update(request.user.user_id,newEditData);
+                    if (editUser[0]){
+                        const token = jwt.sign(
+                            { user_id: editUser[0].id, email: editUser[0].email,name: editUser[0].name},
+                            process.env.TOKEN_KEY,
+                            {
+                                expiresIn: "2h",
+                            }
+                        );
+                        editUser[0].token = token;
+                        //set cookie
+                        let minute = 60 * 1000;
+                        response.cookie('customer_token', token, { maxAge: minute });
+                        apiResponseHelper.jsonRes(response, 200, '',{user: editUser[0] });
+                    }else{
+                        throw new Error(i18n.__('try again.'));
+                    }
+                }
+            }else{
+                apiResponseHelper.jsonRes(response, 409, i18n.__('user not found.') , {});
+            }
+        } catch (err) {
+            apiResponseHelper.jsonRes(response, 500, err.message,{});
         }
     }
 }

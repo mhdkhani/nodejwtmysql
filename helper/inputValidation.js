@@ -1,5 +1,6 @@
 const loginRequired = ['email','password'];
 const registerRequired = ['name','email','password'];
+const editRequired = ['name','email'];
 const Helper = require('./helper.js');
 module.exports = new class inputValidation  extends Helper {
     checkRequiredForm (request,formName){
@@ -11,6 +12,9 @@ module.exports = new class inputValidation  extends Helper {
                 break;
             case 'register_form':
                 fields = registerRequired;
+                break;
+            case 'edit_form':
+                fields = editRequired;
                 break;
         }
         var errorMsg = [];
