@@ -1,6 +1,7 @@
 const loginRequired = ['email','password'];
 const registerRequired = ['name','email','password'];
 const editRequired = ['name','email'];
+const editWithPassRequired = ['name','email','current_password','new_password','confirm_new_password'];
 const Helper = require('./helper.js');
 module.exports = new class inputValidation  extends Helper {
     checkRequiredForm (request,formName){
@@ -14,7 +15,11 @@ module.exports = new class inputValidation  extends Helper {
                 fields = registerRequired;
                 break;
             case 'edit_form':
-                fields = editRequired;
+                if (request.body['change_password'] && request.body['change_password'] === 'yes'){
+                    fields = editWithPassRequired;
+                }else{
+                    fields = editRequired;
+                }
                 break;
         }
         var errorMsg = [];

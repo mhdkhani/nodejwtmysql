@@ -18,6 +18,22 @@
                                             <input type="email" name="email" class="form-control" value="<%= userData.email %>"/>
                                         </div>
                                         <div class="mb-3">
+                                              <label>Change Password</label>
+                                              <input class="form-check-input" type="checkbox" value="yes" name="change_password" />
+                                        </div>
+                                        <div class="mb-3">
+                                              <label>Current Password</label>
+                                              <input type="password" name="current_password" class="form-control" />
+                                        </div>
+                                        <div class="mb-3">
+                                             <label>New Password</label>
+                                             <input type="password" name="new_password" class="form-control" />
+                                        </div>
+                                         <div class="mb-3">
+                                              <label>Confirm New Password</label>
+                                              <input type="password" name="confirm_new_password" class="form-control" />
+                                         </div>
+                                        <div class="mb-3">
                                             <input type="submit" class="btn btn-primary" value="Edit" />
                                             <button type="button" class="btn btn-success">
                                                 <a href="<%= homeUrl %>">Home</a>

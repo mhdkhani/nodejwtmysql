@@ -94,20 +94,39 @@ module.exports = new class AccountController extends ApiController{
                     apiResponseHelper.jsonRes(response, 409, i18n.__('user already exists.') , {});
                 }else{
                     var newEditData = {name:name,email:email };
-                    var editUser = await userModel.update(request.user.user_id,newEditData);
-                    if (editUser[0]){
-                        const token = jwt.sign(
-                            { user_id: editUser[0].id, email: editUser[0].email,name: editUser[0].name},
-                            process.env.TOKEN_KEY,
-                            {
-                                expiresIn: "2h",
+                    var continueEdit = true;
+                    if (request.body['change_password'] && request.body['change_password'] === 'yes'){
+                        continueEdit = false;
+                        if ((await bcrypt.compare(request.body['current_password'], checkUser[0].password))){
+                            if (request.body['new_password'] == request.body['confirm_new_password']){
+                                var encryptedPassword = await bcrypt.hash(request.body['new_password'], 10);
+                                continueEdit = true;
+                                newEditData = {name:name,email:email,password:encryptedPassword};
+                            }else{
+                                throw new Error (i18n.__('New Password And Confirm Password Does Not Match'));
                             }
-                        );
-                        editUser[0].token = token;
-                        //set cookie
-                        let minute = 60 * 1000;
-                        response.cookie('customer_token', token, { maxAge: minute });
-                        apiResponseHelper.jsonRes(response, 200, '',{user: editUser[0] });
+                        }else{
+                            throw new Error (i18n.__('password does not match.'));
+                        }
+                    }
+                    if (continueEdit){
+                        var editUser = await userModel.update(request.user.user_id,newEditData);
+                        if (editUser[0]){
+                            const token = jwt.sign(
+                                { user_id: editUser[0].id, email: editUser[0].email,name: editUser[0].name},
+                                process.env.TOKEN_KEY,
+                                {
+                                    expiresIn: "2h",
+                                }
+                            );
+                            editUser[0].token = token;
+                            //set cookie
+                            let minute = 60 * 1000;
+                            response.cookie('customer_token', token, { maxAge: minute });
+                            apiResponseHelper.jsonRes(response, 200, '',{user: editUser[0] });
+                        }else{
+                            throw new Error(i18n.__('try again.'));
+                        }
                     }else{
                         throw new Error(i18n.__('try again.'));
                     }

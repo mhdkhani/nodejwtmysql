@@ -9,5 +9,6 @@
 	"try again.": "مجددا تلاش کنید.",
 	"%s is required.": "%s اجباری می باشد.",
 	"Invalid Token": "توکن وارد شده معتبر نمی باشد.",
-	"A token is required for authentication": "توکن اجباری می باشد."
+	"A token is required for authentication": "توکن اجباری می باشد.",
+	"New Password And Confirm Password Does Not Match": "کلمه عبور مطابقت ندارد."
 }
