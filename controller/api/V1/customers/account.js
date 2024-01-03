@@ -28,7 +28,7 @@ module.exports = new class AccountController extends ApiController{
                     //set cookie
                     let minute = 60 * 1000;
                     response.cookie('customer_token', token, { maxAge: minute });
-                    apiResponseHelper.jsonRes(response, 200, '',{user: result[0] });
+                    apiResponseHelper.jsonRes(response,request, 200, '/customers/account/dashboard','',{user: result[0] });
                 }else{
                     throw new Error (i18n.__('password does not match.'));
                 }
@@ -36,7 +36,7 @@ module.exports = new class AccountController extends ApiController{
                 throw new Error (i18n.__('user not found.'));
             }
         } catch (err) {
-            apiResponseHelper.jsonRes(response, 500, err.message , {});
+            apiResponseHelper.jsonRes(response,request, 500,'', err.message , {});
         }
     }
     async registerPost(request, response){
@@ -49,7 +49,7 @@ module.exports = new class AccountController extends ApiController{
             const {name,email, password} = request.body;
             let result =  await userModel.findByField('email', email);
             if (result[0]){
-                apiResponseHelper.jsonRes(response, 409, i18n.__('user already exists.') , {});
+                apiResponseHelper.jsonRes(response,request, 409,'', i18n.__('user already exists.') , {});
             }else{
                 var encryptedPassword = await bcrypt.hash(password, 10);
                 var newUserData = {name:name,email:email,password:encryptedPassword };
@@ -63,20 +63,20 @@ module.exports = new class AccountController extends ApiController{
                         }
                     );
                     newUser[0].token = token;
-                    apiResponseHelper.jsonRes(response, 200, '',{user: newUser[0]});
+                    apiResponseHelper.jsonRes(response,request, 200,'/customers/account/login', '',{user: newUser[0]});
                 }else{
                     throw new Error(i18n.__('try again.'));
                 }
             }
         } catch (err) {
-            apiResponseHelper.jsonRes(response, 500, err.message,{});
+            apiResponseHelper.jsonRes(response,request, 500,'', err.message,{});
         }
     }
     async dashboardPost(request, response){
         try {
-            apiResponseHelper.jsonRes(response, 200, '',{user: request.user });
+            apiResponseHelper.jsonRes(response,request, 200,'' ,'',{user: request.user });
         } catch (err) {
-            apiResponseHelper.jsonRes(response, 500,  err.message,{});
+            apiResponseHelper.jsonRes(response,request, 500,'',  err.message,{});
         }
     }
     async editPost(request, response){
@@ -91,7 +91,7 @@ module.exports = new class AccountController extends ApiController{
             if (user[0]){
                 let checkUser =  await userModel.findByField('email', email);
                 if (checkUser[0] && checkUser[0].id != user[0].id){
-                    apiResponseHelper.jsonRes(response, 409, i18n.__('user already exists.') , {});
+                    apiResponseHelper.jsonRes(response,request, 409,'', i18n.__('user already exists.') , {});
                 }else{
                     var newEditData = {name:name,email:email };
                     var continueEdit = true;
@@ -123,7 +123,7 @@ module.exports = new class AccountController extends ApiController{
                             //set cookie
                             let minute = 60 * 1000;
                             response.cookie('customer_token', token, { maxAge: minute });
-                            apiResponseHelper.jsonRes(response, 200, '',{user: editUser[0] });
+                            apiResponseHelper.jsonRes(response,request, 200,'/customers/account/dashboard', '',{user: editUser[0] });
                         }else{
                             throw new Error(i18n.__('try again.'));
                         }
@@ -132,10 +132,10 @@ module.exports = new class AccountController extends ApiController{
                     }
                 }
             }else{
-                apiResponseHelper.jsonRes(response, 409, i18n.__('user not found.') , {});
+                apiResponseHelper.jsonRes(response,request, 409,'', i18n.__('user not found.') , {});
             }
         } catch (err) {
-            apiResponseHelper.jsonRes(response, 500, err.message,{});
+            apiResponseHelper.jsonRes(response,request, 500,'', err.message,{});
         }
     }
 }
