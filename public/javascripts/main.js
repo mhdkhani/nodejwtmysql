@@ -30,10 +30,21 @@ jQuery(function ($) {
                 "data": JSON.stringify(form.serializeObject()),
                 success: function(data)
                 {
-                    alert(data);
+                    if (!data.status){
+                        popupS.alert({
+                            content: data.message
+                        });
+                    }
+                    if (data.redirect && data.redirect !== ''){
+                        window.location.href = data.redirect;
+                    }
                 },
                 error:function (response){
-
+                    if (response.responseJSON.message){
+                        popupS.alert({
+                            content: response.responseJSON.message
+                        });
+                    }
                 }
             });
         };

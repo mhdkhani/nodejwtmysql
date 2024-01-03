@@ -16,9 +16,14 @@ router.get('/login/', authIsLoggedIn,function(req, res, next) {
         loginPostUrl:helper.getUrl(req,'/customers/account/login'),
         userIsLoggedIn:false,
         bootstrapCssUrl:helper.getUrl(req,'/css/bootstrap.min.css'),
+        styles:[
+            helper.getUrl(req,'/css/bootstrap.min.css'),
+            helper.getUrl(req,'/css/lib/popupS.min.css')
+        ],
         scripts:
             [
                 helper.getUrl(req,'/js/jquery.min.js'),
+                helper.getUrl(req,'/js/lib/popupS.min.js'),
                 helper.getUrl(req,'/js/main.js'),
                 helper.getUrl(req,'/js/customer/account.js')
             ],
@@ -38,7 +43,10 @@ router.get('/register/', authIsLoggedIn,function(req, res, next) {
         userIsLoggedIn:false,
         homeUrl:helper.getUrl(req,'/'),
         registerPostUrl:helper.getUrl(req,'/customers/account/register'),
-        bootstrapCssUrl:helper.getUrl(req,'/css/bootstrap.min.css'),
+        styles:[
+            helper.getUrl(req,'/css/bootstrap.min.css'),
+            helper.getUrl(req,'/css/lib/popupS.min.css')
+        ],
         scripts:
             [
                 helper.getUrl(req,'/js/jquery.min.js'),
@@ -63,7 +71,10 @@ router.get('/dashboard/', authIsNotLoggedIn , function(req, res, next) {
         homeUrl:helper.getUrl(req,'/'),
         editPostUrl:helper.getUrl(req,'/customers/account/edit'),
         logoutUrl:helper.getUrl(req,'/customers/account/logout'),
-        bootstrapCssUrl:helper.getUrl(req,'/css/bootstrap.min.css'),
+        styles:[
+            helper.getUrl(req,'/css/bootstrap.min.css'),
+            helper.getUrl(req,'/css/lib/popupS.min.css')
+        ],
         scripts:
             [
                 helper.getUrl(req,'/js/jquery.min.js'),
