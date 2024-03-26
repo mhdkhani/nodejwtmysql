@@ -7,7 +7,7 @@ var cookieParser = require('cookie-parser');
 const expressLayouts = require('express-ejs-layouts')
 const customerApiRoutes = require("./routes/api/customers/account");
 const customerRoutes = require("./routes/customers/account");
-const port = 3000
+const port = 5000
 app.use(express.json());
 app.use(cookieParser())
 //assets
